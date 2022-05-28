@@ -88,7 +88,7 @@ def main():
                ("Crockpot White Chili Chicken", "https://lovelylittlekitchen.com/creamy-crockpot-white-chicken-chili/"),
                ("Creamy Tuscan Chicken",
                 "https://www.paleorunningmomma.com/creamy-tuscan-chicken-paleo-whole30-keto/#wprm-recipe-container\
-                -2596\ 0"),
+                -25960"),
                ("Spinach and Artichoke Chicken", "https://easyfamilyrecipes.com/spinach-and-artichoke-chicken/"),
                ("Everything Bagel Chicken and Veggies",
                 "https://whatmollymade.com/sheet-pan-everything-bagel-chicken/"),
