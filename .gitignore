@@ -19,6 +19,7 @@ secret.py
 
 # Distribution / packaging
 .Python
+bin/
 build/
 develop-eggs/
 dist/

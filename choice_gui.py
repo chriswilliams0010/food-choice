@@ -1,84 +1,66 @@
 from secret import secret
-import sqlite3
+from query_framework import Database
+from tkinter import *
 
+def skipper():
+    pass
 
-class Database:
-    """sqlite3 database class"""
+class Chooser:
 
-    def __init__(self, **kwargs):
-        self.filename = kwargs.get('filename')
-        self.table = kwargs.get('table', 'test')
+    def __init__(self, root):
+        window = Frame(root)
+        window.pack()
 
-    def sql_do(self, sql, *params):
-        self._db.execute(sql, params)
-        self._db.commit()
+        self.error = Message(text = "", width = 160)
+        self.label1 = Label(text = "Username")
+        self.label1.pack()
 
-    def insert(self, row):
-        self._db.execute(f'insert into {self._table} (dish_name, website) values (?, ?)',
-                         (row['dish_name'], row['website']))
-        self._db.commit()
+        self.username = Entry(text = "")
+        self.username.pack()
 
-    def retrieve_dish(self, key):
-        cursor = self._db.execute(f'select * from {self._table} where dish_name = ?', (key,))
-        return dict(cursor.fetchone())
+        self.label2 = Label(text = "Password")
+        self.label2.pack()
+        self.label2.config(bg='lightgreen', padx=0)
 
-    def retrieve_website(self, key):
-        cursor = self._db.execute(f'select * from {self._table} where website = ?', (key,))
-        return dict(cursor.fetchone())
+        self.password = Entry(text = "")
+        self.password.pack()
 
-    def update(self, row):
-        self._db.execute(f'update {self._table} set website = ? where dish_name = ?',
-                         (row['website'], row['dish_name']))
-        self._db.commit()
+        self.label3 = Label(text = "Username")
+        self.label3.pack()
 
-    def delete(self, key):
-        self._db.execute(f'delete from {self._table} where dish_name = ?', (key,))
-        self._db.commit()
+        self.username2 = Entry(text = "")
+        self.username2.pack()
 
-    def disp_rows(self):
-        cursor = self._db.execute(f'select * from {self._table}')
-        for row in cursor:
-            print(f"  {row['dish_name']}: {row['website']}")
+        self.label4 = Label(text = "Password")
+        self.label4.pack()
+        self.label4.config(bg='lightgreen', padx=0)
 
-    def __iter__(self):
-        cursor = self._db.execute(f'select * from {self._table}')
-        for row in cursor:
-            yield dict(row)
+        self.password2 = Entry(text = "")
+        self.password2.pack()
 
-    @property
-    def filename(self):
-        return self._filename
+        self.label5 = Label(text = "Username")
+        self.label5.pack()
 
-    @filename.setter
-    def filename(self, fn):
-        self._filename = fn
-        self._db = sqlite3.Connection(fn)
-        self._db.row_factory = sqlite3.Row
+        self.username3 = Entry(text = "")
+        self.username3.pack()
 
-    @filename.deleter
-    def filename(self):
-        self.close()
+        self.label6 = Label(text = "Password")
+        self.label6.pack()
+        self.label6.config(bg='lightgreen', padx=0)
 
-    @property
-    def table(self):
-        return self._table
+        self.password3 = Entry(text = "")
+        self.password3.pack()
 
-    @table.setter
-    def table(self, t):
-        self._table = t
+        self.button = Button(text = "Search", command = skipper)
+        self.button.pack()
 
-    @table.deleter
-    def table(self):
-        self._table = 'test'
-
-    def close(self):
-        self._db.close()
-        del self._filename
 
 
 def main():
-    db = Database(filename=secret['database'], table='fish')
-    db.disp_rows()
+    window = Tk()
+    window.geometry("1200x500")
+    c = Chooser(window)
+    window.mainloop()
 
 
 if __name__ == "__main__":
