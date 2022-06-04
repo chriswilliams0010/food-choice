@@ -38,6 +38,10 @@ class Database(object):
         query = f"create table if not exists {table} (id integer primary key, dish_name text, website text)"
         self.execute(query)
 
+    def drop_if(self, table):
+        query = f"drop table if exists {table}"
+        self.execute(query)
+
     def commit(self):
         self.connection.commit()
 
@@ -49,7 +53,8 @@ def main():
             ("Sheet Pan Fajitas", "https://www.number-2-pencil.com/one-sheet-pan-shrimp-fajitas/"),
             ("Honey Salmon", "https://damndelicious.net/2014/02/07/honey-salmon-foil/"),
             ("Crab Cakes", "https://www.dinneratthezoo.com/maryland-crab-cakes/#recipe"),
-            ("Tilapia with Creamy Red Pepper Sauce", "https://cooktoria.com/tilapia-roasted-pepper-sauce/#recipe")]
+            ("Tilapia with Creamy Red Pepper Sauce", "https://cooktoria.com/tilapia-roasted-pepper-sauce/#recipe"),
+            ("Lemon and Garlic Shrimp", "https://www.budgetbytes.com/one-pot-lemon-garlic-shrimp-and-rice/")]
     beef = [("Korean Beef", "https://www.tablefortwoblog.com/korean-beef-recipe/"),
             ("Cheesesteak Stuffed Peppers",
              "https://www.delish.com/cooking/recipe-ideas/recipes/a51551/cheesesteak-stuffed-peppers-recipe/"),
@@ -140,6 +145,12 @@ def main():
                   ("Spaghetti and Meatballs", "https://www.noracooks.com/spaghetti-and-easy-vegan-meatballs/"),
                   ("Rice, Eggs and Avocado", "https://www.bonappetit.com/recipe/rice-bowl-fried-egg-avocado")]
     with Database() as db:
+        db.drop_if('fish')
+        db.drop_if('beef')
+        db.drop_if('chicken')
+        db.drop_if('pork')
+        db.drop_if('vegetarian')
+        db.commit()
         db.executemany('fish', fish)
         db.executemany('beef', beef)
         db.executemany('chicken', chicken)
