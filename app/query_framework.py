@@ -1,10 +1,14 @@
 import sqlite3
-class Database:
+class Database(object):
     """sqlite3 database class"""
+    __DB_LOCATION = 'food.db'
 
-    def __init__(self, **kwargs):
-        self.filename = kwargs.get('filename')
-        self.table = kwargs.get('table', 'test')
+    def __init__(self, db_location=None):
+        if db_location is not None:
+            self.connection = sqlite3.connect(db_location)
+        else:
+            self.connection = sqlite3.connect(self.__DB_LOCATION)
+        self._db = self.connection.cursor()
 
     def sql_do(self, sql, *params):
         self._db.execute(sql, params)
@@ -71,5 +75,3 @@ class Database:
     def close(self):
         self._db.close()
         del self._filename
-
-
